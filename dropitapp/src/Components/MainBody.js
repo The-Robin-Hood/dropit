@@ -1,11 +1,11 @@
-import { Avatar, Button,IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Button, IconButton, makeStyles, Typography } from "@material-ui/core";
 import "../styles/HomePage.css";
 import AndroidOutlinedIcon from '@material-ui/icons/AndroidOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 import DocumentScannerOutlinedIcon from '@mui/icons-material/DocumentScannerOutlined';
 import "../styles/Animation.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 
 const useStyles = mode => makeStyles((theme) => ({
@@ -69,7 +69,7 @@ const useStyles = mode => makeStyles((theme) => ({
         bottom: "10px",
         right: "10px",
         backgroundColor: "lightblue",
-        color:"#618093",
+        color: "#618093",
         "&:hover": {
             backgroundColor: "lightblue",
         },
@@ -78,6 +78,7 @@ const useStyles = mode => makeStyles((theme) => ({
 }));
 
 const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
+    const [selectedRemotePeer, setSelectedRemotePeer] = useState(null);
     const userDevice = () => {
         if (navigator.userAgent.indexOf("Mac") !== -1) {
             return <AppleIcon className={classes.AvatarIcon} />
@@ -196,7 +197,6 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
                 </div>
 
                 {Clients.map((client, index) => {
-
                     return (
                         <div className="Client popout" style={handleClientPositonStyle(index)} key={index}>
                             <input
@@ -206,13 +206,19 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
                                 style={{ display: 'none' }}
                                 id="contained-button-file"
                                 multiple
+                                onClick={(event)=> { 
+                                    event.target.value = null
+                               }}                     
                                 onChange={(e) => {
                                     if (e.target.files.length > 0) {
-                                        handleFileTransfer(client.peer, e.target.files);
+                                        handleFileTransfer(selectedRemotePeer, e.target.files);
                                     }
                                 }}
                             />
-                            <Button className={classes.btn} disableRipple onClick={() => fileInput.current.click()}>
+                            <Button className={classes.btn} disableRipple onClick={() => {
+                                setSelectedRemotePeer(client.peer);
+                                fileInput.current.click();
+                            }}>
                                 <Avatar className={classes.Avatar}>
                                     {(client.name.os === "Android") && <AndroidOutlinedIcon className={classes.AvatarIcon} />}
                                     {(client.name.os === "iOS") && <AppleIcon fontSize="large" className={classes.AvatarIcon} />}

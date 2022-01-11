@@ -4,7 +4,6 @@ import DialogContent from '@mui/material/DialogContent';
 import Button from '@mui/material/Button';
 import LinearProgressWithLabel from '../Hooks/LinearProgress';
 import { Typography } from '@material-ui/core';
-// import { useState } from 'react';
 
 const ReceiveFilePopup = ({ fileDetails, setReceiving, fileQueue, setfileQueue,mode }) => {
     const handleCancel = () => {
@@ -29,13 +28,13 @@ const ReceiveFilePopup = ({ fileDetails, setReceiving, fileQueue, setfileQueue,m
     return (
         <div><Dialog open={true} >
             <DialogTitle  style={{color:(mode==='light')?"black":"skyblue",backgroundColor: (mode==='light')?"white":"black"}}>File Receiving</DialogTitle>
-            <DialogContent style={{ maxWidth: "400px", width: "300px", overflowWrap: "break-word",color:(mode==='light')?"black":"skyblue",backgroundColor: (mode==='light')?"white":"black"}}>
+            <DialogContent style={{ maxWidth: "500px", minWidth: (window.visualViewport.width > 600 ) ?"400px": "230px", overflowWrap: "break-word",color:(mode==='light')?"black":"skyblue",backgroundColor: (mode==='light')?"white":"black"}}>
                 {(fileQueue !== []) &&
                     fileQueue.map((file, index) => {
                         return (
                             <div key={index}>
                                 <Typography>{file.name}</Typography>
-                                <Typography style={{ fontSize: 13, marginBottom: 10 }}>{file.size}</Typography>
+                                <Typography style={{ fontSize: 13, marginBottom: 10 }}>{(file.size>1000*1000)? Math.round(Number(file.size)/1e+6)+" MB" : Math.round(Number(file.size)/1000)+" KB"}</Typography>
                             </div>
                         )
                     })
