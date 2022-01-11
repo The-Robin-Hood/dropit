@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro&family=Righteous&display=swap');
+
+body {
+    margin: 0;
+  }
+
+.Body{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10;  
+}
+
+.BodyContent{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+
+}
+
+.User
+{
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    flex-direction: column;    
+}
+
+.Client
+{
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    flex-direction: column;    
+    position: absolute;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  flex-direction: column;    
+  position: absolute;
+  padding-bottom: 20px;
+}
+.radar {
+  width: 100vh;
+  height: 100vh;
+  position: relative;
+}
+@keyframes wave-animation {
+  1% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 1;
+  }
+50% {
+      opacity: 0.7;
+  }
+  100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 0;
+  }
+}
+.radar > .radar-wave {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100vh;
+  height: 100vh;
+  opacity: 0;
+  background-color: transparent;
+  border: #3BA5C9 solid;
+  border-radius: 100%;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: wave-animation 1s 0s linear infinite;
+  animation: wave-animation 5s 0s linear infinite;
+}
+.radar > .radar-wave:nth-child(2) {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+.radar > .radar-wave:nth-child(3) {
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.radar > .radar-wave:nth-child(4) {
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+
+.radar > .radar-wave:nth-child(5) {
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+}

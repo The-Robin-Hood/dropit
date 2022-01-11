@@ -63,6 +63,14 @@ class DropIt {
             case "Pong":
                 Sender.HeartBeat = Date.now();
                 break;
+            case "FileProgress":
+                this.sendMessage(this.chambers[Sender.ip][message.senderId], message);
+                break;
+            case "FileTransferComplete":
+                console.log("File transfer complete");
+                this.sendMessage(this.chambers[Sender.ip][message.senderId], message);
+                break;
+               
             default:
                 console.log("Unknown message mode");
                 break;
@@ -70,6 +78,7 @@ class DropIt {
     }
 
     joinChamber(Client) {
+        this.sendMessage(Client, { mode: "Joined", id: Client.id });
         const otherClients = [];
         for (const otherClientsID in this.chambers[Client.ip]) {
             const otherClient = this.chambers[Client.ip][otherClientsID];

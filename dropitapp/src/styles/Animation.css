@@ -1,0 +1,14 @@
+.popout {
+    animation: popout 0.3s ease-in-out;
+    -webkit-animation: popout 0.3s ease-in-out;
+}
+@keyframes popout {
+    from{transform:scale(0)}
+    80%{transform:scale(1.2)}
+    to{transform:scale(1)}
+}
+@-webkit-keyframes popout {
+    from{-webkit-transform:scale(0)}
+    80%{-webkit-transform:scale(1.2)}
+    to{-webkit-transform:scale(1)}
+}
