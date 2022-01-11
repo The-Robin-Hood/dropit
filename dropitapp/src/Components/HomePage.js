@@ -54,7 +54,6 @@ const HomePage = () => {
 
     useEffect(() => {
         if (recievefileDetails.progress === 100) {
-            console.log("Setting");
             setfileQueue((oldArray) => [...oldArray, recievefileDetails]);
         }
     }, [recievefileDetails]);

@@ -20,7 +20,7 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
                 setpeerId(id);
             });
             peer.current.on('connection', conn => {
-                console.log("connection");
+                console.log("Connection made with Remote Peer");
                 let receiveBuffer = [];
                 let receiveBufferLength = 0;
                 let count = 0;
@@ -67,7 +67,6 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
 
         ws.current.onmessage = (event) => {
             var data = JSON.parse(event.data);
-            console.log(data);
             if (data.mode === 'Ping') {
                 ws.current.send(JSON.stringify({ mode: 'Pong' }));
             }

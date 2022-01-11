@@ -30,7 +30,6 @@ module.exports = class Client{
         if (request.peerId) {
             this.id = request.peerId;
         } else {
-            console.log(request.headers.cookie);
             this.id = request.headers.cookie.replace('peerid=', '');
         }
     }

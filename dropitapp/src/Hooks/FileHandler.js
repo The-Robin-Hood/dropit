@@ -37,7 +37,6 @@ const sendFile = (conn, file,userId) => {
 
 const FileTransfer = (peer, remotePeer, files,userId) => {
     fileCount = files.length;
-    console.log("Error May Happen", fileCount);
     const conn = peer.current.connect(remotePeer);
     for (let i = 0; i < files.length; i++) {
         filesQueue.push(files[i]);

@@ -67,7 +67,6 @@ class DropIt {
                 this.sendMessage(this.chambers[Sender.ip][message.senderId], message);
                 break;
             case "FileTransferComplete":
-                console.log("File transfer complete");
                 this.sendMessage(this.chambers[Sender.ip][message.senderId], message);
                 break;
                
