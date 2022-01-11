@@ -1,4 +1,4 @@
-import { Avatar, Button, Icon, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Button,IconButton, makeStyles, Typography } from "@material-ui/core";
 import "../styles/HomePage.css";
 import AndroidOutlinedIcon from '@material-ui/icons/AndroidOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
