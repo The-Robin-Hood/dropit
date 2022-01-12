@@ -1,11 +1,7 @@
 var filesQueue = [];
 var fileCount = 0;
 const sendFile = (conn, file,userId) => {    
-    var chunksize = 1000 * 1000;
-    if (file.size > 500 * 1000 * 1000) {
-        console.log("File too big Switching the transfer speed");
-        chunksize = 1000 * 1000 * 5;
-    }
+    var chunksize = 1e6;
     let offset = 0;
     const fileReader = new FileReader();
     fileReader.addEventListener('load', e => {

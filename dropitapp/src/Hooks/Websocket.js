@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import Peer from "peerjs";
 
@@ -85,6 +86,7 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
             if (data.mode === 'Client-Left') {
                 setClients(existingClients => existingClients.filter(x => x.id !== data.ClientId));
                 setReceiving(false);
+                setSending(false);
 
             }
             if (data.mode === 'FileProgress') {
@@ -101,7 +103,7 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
 
         }
 
-    }, [Clients]);
+    }, []);
 
     return null;
 }

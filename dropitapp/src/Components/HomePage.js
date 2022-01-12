@@ -56,7 +56,8 @@ const HomePage = () => {
         if (recievefileDetails.progress === 100) {
             setfileQueue((oldArray) => [...oldArray, recievefileDetails]);
         }
-    }, [recievefileDetails]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [recievefileDetails.progress]);
 
     return (
         <div className="HomePage">
@@ -73,7 +74,6 @@ const HomePage = () => {
                 </Alert>
             </Snackbar>
         </div>
-
 
     );
 }

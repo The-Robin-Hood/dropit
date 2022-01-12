@@ -1,38 +1,41 @@
 import QRCode from 'qrcode'
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import {makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-    content:{
-        height: '400px',
-        width: '300px',
+    content: {
+        height: (window.visualViewport.width > 600) ? "400px" : "330px",
+        width: (window.visualViewport.width > 600) ? "300px" : "240px",
+    },
+    imgsize:{
+        height: (window.visualViewport.width > 600) ? "300px" : "250",
+        width: (window.visualViewport.width > 600) ? "300px" : "250px",
     }
 }));
-const QrCodeGenerator = ({peerId,openQr,setOpenQr}) => {
-    const [imgurl,setimgurl] = useState('');
+const QrCodeGenerator = ({ peerId, openQr, setOpenQr }) => {
+    const [imgurl, setimgurl] = useState('');
     useEffect(() => {
         QRCode.toDataURL(peerId)
-        .then(url => {
-            setimgurl(url);
-        })
-        .catch(err => {
-            console.error(err)
-        })
-    }, [])
-    
-        const classes = useStyles();
+            .then(url => {
+                setimgurl(url);
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }, [peerId])
+
+    const classes = useStyles();
     return (
-         <div><Dialog open={openQr} onClose={()=>setOpenQr(false)}>
-        <DialogContent className={classes.content}>
-            {imgurl && <img style={{height:"300px",width:"300px"}} src={imgurl} alt="QR Code" />}
-        <Typography style={{fontFamily:"'Spline Sans', sans-serif"}} variant="h5" align="center">Scan this QR Code to transfer files.</Typography>
-                   
-        </DialogContent>
-    </Dialog> 
-    </div>
-);
-    }
+        <Dialog open={openQr} onClose={() => setOpenQr(false)}>
+            <DialogContent className={classes.content}>
+                {imgurl && <img className={classes.imgsize} src={imgurl} alt="QR Code" />}
+                <Typography style={{ fontFamily: "'Spline Sans', sans-serif" }} variant="h5" align="center">Scan this QR Code to transfer files.</Typography>
+
+            </DialogContent>
+        </Dialog>
+    );
+}
 
 export default QrCodeGenerator;
