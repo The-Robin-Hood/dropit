@@ -2,16 +2,32 @@ var process = require('process')
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
 const Client = require('./client.js');
+const https = require('https');
+const fs = require('fs');
 
 process.on('SIGINT', () => {
     console.log("Exiting...");
     process.exit(0);
 });
 
+const options = {
+    key: fs.readFileSync('Keys/myCA.key'),
+    cert: fs.readFileSync('Keys/myCA.pem'),
+    passphrase: 'ansari',
+  };
+
+let server = https.createServer(options, (req, res) => {
+    res.writeHead(200);
+    res.end("Hello");
+  });
+  server.addListener('upgrade', (req, res, head) => console.log('UPGRADE:', req.url));
+  server.on('error', (err) => console.error(err));
+  server.listen(8080, () => console.log('Https running on port 8000'));
+
 class DropIt {
 
     constructor(port) {
-        this.wss = new WebSocket.Server({ port: port });
+        this.wss = new WebSocket.Server({ server });
         this.wss.on('connection', (socket, request) => this.onConnection(new Client(socket, request)));
         this.wss.on("headers", (headers, response) => this.setHeaders(headers, response));
         this.chambers = {};

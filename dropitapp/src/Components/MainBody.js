@@ -77,7 +77,7 @@ const useStyles = mode => makeStyles((theme) => ({
     }
 }));
 
-const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
+const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,setErrorBarState }) => {
     const [selectedRemotePeer, setSelectedRemotePeer] = useState(null);
     const userDevice = () => {
         if (navigator.userAgent.indexOf("Mac") !== -1) {
@@ -173,6 +173,17 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
         return values;
     }
 
+    const handleQrScannerButton =   () => {
+        navigator.getUserMedia({video: {
+            facingMode: "environment"
+          }}, function() {
+            setQrButtonClick(true);
+          }, function() {
+            console.log("Error");
+            setQrButtonClick(false);
+            setErrorBarState(true);
+          });
+    }
 
     const classes = useStyles(mode)();
     const fileInput = useRef();
@@ -236,7 +247,7 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer }) => {
                 })
                 }
 
-                <IconButton className={classes.scanBtn} onClick={() => { console.log("clicked") }}>
+                <IconButton className={classes.scanBtn} onClick={() => handleQrScannerButton()}>
                     <DocumentScannerOutlinedIcon style={{ fontSize: 30 }} />
                 </IconButton>
 

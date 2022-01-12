@@ -9,6 +9,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import OpacityIcon from '@material-ui/icons/Opacity';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 
 const useStyles = mode => makeStyles((theme) => ({
@@ -16,9 +17,13 @@ const useStyles = mode => makeStyles((theme) => ({
             flexGrow: 1,
         },
         menuButton: {
-            marginRight: theme.spacing(2),
+            marginRight: 0,
+            marginLeft:"20px",
             "&:hover": {
                 backgroundColor: "transparent",
+            },
+            "@media (max-width:600px)": {
+                marginLeft:"0px",
             }
         },
         title: {
@@ -78,9 +83,13 @@ const TopBar = ({mode,handleMode,setOpenQr}) => {
                     <IconButton edge="start" className={classes.menuButton} onClick={()=> handleMode()  } color="inherit" aria-label="menu">
                        { (mode === "light") ? <NightsStayIcon className={classes.NavIcon} /> : <Brightness7Icon className={classes.NavIcon} /> }
                     </IconButton>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton edge="start" className={classes.menuButton} onClick={()=>  window.open("https://github.com/The-Robin-Hood") }  color="inherit" aria-label="menu">
                         <GitHubIcon className={classes.NavIcon} />
                     </IconButton>
+                    <IconButton edge="start" className={classes.menuButton} onClick={()=>  window.open("https://instagram.com/the_robin_hood") }  color="inherit" aria-label="menu">
+                        <InstagramIcon className={classes.NavIcon} />
+                    </IconButton>
+                    
                 </Toolbar>
             </AppBar>
             <Toolbar />
