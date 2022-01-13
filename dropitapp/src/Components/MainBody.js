@@ -1,9 +1,8 @@
-import { Avatar, Button, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Button, makeStyles, Typography } from "@material-ui/core";
 import "../styles/HomePage.css";
 import AndroidOutlinedIcon from '@material-ui/icons/AndroidOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
-import DocumentScannerOutlinedIcon from '@mui/icons-material/DocumentScannerOutlined';
 import "../styles/Animation.css";
 import { useRef, useState } from "react";
 
@@ -66,6 +65,8 @@ const useStyles = mode => makeStyles((theme) => ({
     },
     scanBtn: {
         position: "absolute",
+        width:"100px",
+        borderRadius:"100px",
         bottom: "10px",
         right: "10px",
         backgroundColor: "lightblue",
@@ -174,7 +175,7 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,s
     }
 
     const handleQrScannerButton =   () => {
-        navigator.getUserMedia({video: {
+        navigator.mediaDevices.getUserMedia({video: {
             facingMode: "environment"
           }}, function() {
             setQrButtonClick(true);
@@ -247,9 +248,10 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,s
                 })
                 }
 
-                <IconButton className={classes.scanBtn} onClick={() => handleQrScannerButton()}>
-                    <DocumentScannerOutlinedIcon style={{ fontSize: 30 }} />
-                </IconButton>
+                <Button className={classes.scanBtn} onClick={() => handleQrScannerButton()}>
+                    Scan QR
+                </Button>
+                
 
             </div>
         </div>
