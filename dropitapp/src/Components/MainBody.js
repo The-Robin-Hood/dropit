@@ -78,7 +78,7 @@ const useStyles = mode => makeStyles((theme) => ({
     }
 }));
 
-const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,setErrorBarState }) => {
+const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,setErrorBarState,setErrorMessage }) => {
     const [selectedRemotePeer, setSelectedRemotePeer] = useState(null);
     const userDevice = () => {
         if (navigator.userAgent.indexOf("Mac") !== -1) {
@@ -175,13 +175,14 @@ const Body = ({ mode, deviceName, Clients, handleFileTransfer,setQrButtonClick,s
     }
 
     const handleQrScannerButton =   () => {
-        navigator.mediaDevices.getUserMedia({video: {
+        navigator.getUserMedia({video: {
             facingMode: "environment"
           }}, function() {
             setQrButtonClick(true);
           }, function() {
             console.log("Error");
             setQrButtonClick(false);
+            setErrorMessage("Required Camera Permission !!");
             setErrorBarState(true);
           });
     }

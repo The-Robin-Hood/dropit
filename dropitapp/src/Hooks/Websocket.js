@@ -2,19 +2,16 @@
 import { useEffect } from "react";
 import Peer from "peerjs";
 
-const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, setReceiving, setSending,setuserId,setSnackBarState,setSendFileDetails}) => {
+const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, setReceiving, setSending, setuserId, setSnackBarState, setSendFileDetails }) => {
     useEffect(() => {
-        ws.current = new WebSocket("ws://192.168.0.155:8080/webrtc");
+        ws.current = new WebSocket("wss://localhost:8080/webrtc");
         ws.current.onopen = () => {
             console.log("ws opened");
             const servers = {
-                'iceServers':
-                    [
-                        {
-                            'urls':
-                                ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302']
-                        }
-                    ], 'sdpSemantics': 'unified-plan'
+                'iceServers': [{
+                    'urls': ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302']
+                }],
+                'sdpSemantics': 'unified-plan'
             };
             peer.current = new Peer(undefined, servers);
             peer.current.on('open', id => {
@@ -35,18 +32,17 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
                         progress: Math.round(receiveBufferLength * 100 / data.filesize),
                         count: data.filecount,
                         receiveBuffer: receiveBuffer,
-                        senderId:data.senderId
+                        senderId: data.senderId
                     });
-                    ws.current.send(JSON.stringify({ mode: 'FileProgress',fileName:data.filename, progress: Math.round(receiveBufferLength * 100 / data.filesize),senderId: data.senderId}));
-                    if(receiveBufferLength === data.filesize){
+                    ws.current.send(JSON.stringify({ mode: 'FileProgress', fileName: data.filename, progress: Math.round(receiveBufferLength * 100 / data.filesize), senderId: data.senderId }));
+                    if (receiveBufferLength === data.filesize) {
                         receiveBuffer = [];
                         receiveBufferLength = 0;
                         count++;
                     }
-                    if(data.filecount === count)
-                    {
-                        ws.current.send(JSON.stringify({ mode: 'FileTransferComplete',senderId: data.senderId}));
-                        count =0;
+                    if (data.filecount === count) {
+                        ws.current.send(JSON.stringify({ mode: 'FileTransferComplete', senderId: data.senderId }));
+                        count = 0;
                     }
                 });
             });
@@ -71,8 +67,7 @@ const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, s
             if (data.mode === 'Ping') {
                 ws.current.send(JSON.stringify({ mode: 'Pong' }));
             }
-            if(data.mode === 'Joined')
-            {
+            if (data.mode === 'Joined') {
                 setuserId(data.id);
             }
             if (data.mode === 'Clients-Present') {

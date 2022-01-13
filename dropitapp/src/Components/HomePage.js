@@ -28,6 +28,7 @@ const HomePage = () => {
     const [fileQueue, setfileQueue] = useState([]);
     const [snackBarState, setSnackBarState] = useState(false);
     const [errorBarState, setErrorBarState] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [QrButtonClick,setQrButtonClick] = useState(false);
 
     const ws = useRef();
@@ -63,11 +64,12 @@ const HomePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recievefileDetails.progress]);
 
+
     return (
         <div className="HomePage">
             <Popup Name={userName} peerId={peerId} setName={setuserName} ws={ws} />
             <TopBar mode={mode} handleMode={handleMode} setOpenQr={setOpenQr}></TopBar>
-            <Body mode={mode} deviceName={userName} Clients={Clients} handleFileTransfer={handleFileTransferClick} setQrButtonClick={setQrButtonClick} setErrorBarState={setErrorBarState} />
+            <Body mode={mode} deviceName={userName} Clients={Clients} handleFileTransfer={handleFileTransferClick} setQrButtonClick={setQrButtonClick} setErrorBarState={setErrorBarState} setErrorMessage={setErrorMessage} />
             <Websocket ws={ws} peer={peer} setpeerId={setpeerId} Clients={Clients} setClients={setClients} setReceiving={setReceiving} setSending={setSending} setFileDetails={setRecieveFileDetails} setuserId={setuserId} setSnackBarState={setSnackBarState} setSendFileDetails={setSendFileDetails} />
             {peerId && (!receiving) && (!sending) && <QrCodeGenerator peerId={peerId} openQr={openQr} setOpenQr={setOpenQr} />}
             {receiving && <ReceiveFilePopup mode={mode} setReceiving={setReceiving} fileDetails={recievefileDetails} fileQueue={fileQueue} setfileQueue={setfileQueue} />}
@@ -79,10 +81,10 @@ const HomePage = () => {
             </Snackbar>
             <Snackbar open={errorBarState} onClose={handleSnackBar} autoHideDuration={3000} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
                 <Alert icon={<ErrorOutlineIcon fontSize="inherit" style={{ color: "white" }} />} sx={{ width: '100%' }} style={{ backgroundColor: "red", color: "white" }}>
-                    Required Camera Permission !!
+                    {errorMessage}
                 </Alert>
             </Snackbar>
-            {QrButtonClick && <QRScanner setQrButtonClick={setQrButtonClick} handleFileTransfer={handleFileTransferClick} />}
+            {QrButtonClick && <QRScanner setQrButtonClick={setQrButtonClick} handleFileTransfer={handleFileTransferClick} setErrorBarState={setErrorBarState} setErrorMessage={setErrorMessage} />}
         </div>
 
     );

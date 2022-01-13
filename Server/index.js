@@ -2,6 +2,18 @@ var process = require('process')
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
 const Client = require('./client.js');
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+    key: fs.readFileSync('localhost-key.pem'),
+    cert: fs.readFileSync('localhost.pem')
+};
+
+const server = https.createServer(options, (req, res) => {
+    res.writeHead(200);
+    res.end("Hello world\n");
+}).listen(8080);
 
 process.on('SIGINT', () => {
     console.log("Exiting...");
@@ -11,7 +23,7 @@ process.on('SIGINT', () => {
 class DropIt {
 
     constructor(port) {
-        this.wss = new WebSocket.Server({ port });
+        this.wss = new WebSocket.Server({ server });
         this.wss.on('connection', (socket, request) => this.onConnection(new Client(socket, request)));
         this.wss.on("headers", (headers, response) => this.setHeaders(headers, response));
         this.chambers = {};
@@ -40,7 +52,7 @@ class DropIt {
         }
 
         Client.socket.on('message', message => this.onMessage(Client, message));
-        Client.socket.on('close', () =>this.leaveChamber(Client));
+        Client.socket.on('close', () => this.leaveChamber(Client));
         this.checkLive(Client);
     }
 
@@ -69,7 +81,7 @@ class DropIt {
             case "FileTransferComplete":
                 this.sendMessage(this.chambers[Sender.ip][message.senderId], message);
                 break;
-               
+
             default:
                 console.log("Unknown message mode");
                 break;
@@ -91,12 +103,12 @@ class DropIt {
         });
 
         this.chambers[Client.ip][Client.id] = Client;
-    
+
     }
 
     leaveChamber(Client) {
-        if (!this.chambers[Client.ip] || !this.chambers[Client.ip][Client.id])return;
-           
+        if (!this.chambers[Client.ip] || !this.chambers[Client.ip][Client.id]) return;
+
         this.killLive(this.chambers[Client.ip][Client.id]);
 
         delete this.chambers[Client.ip][Client.id];
@@ -124,12 +136,10 @@ class DropIt {
 
         if (Date.now() - Client.HeartBeat > 2 * timeout) {
             console.log("Client timed out");
-            if (!this.chambers[Client.ip] || !this.chambers[Client.ip][Client.id])
-            {
+            if (!this.chambers[Client.ip] || !this.chambers[Client.ip][Client.id]) {
                 console.log("Client not joined the chamber yet so killing it");
                 Client.socket.terminate();
-            }
-            else this.leaveChamber(Client);
+            } else this.leaveChamber(Client);
             return;
         }
         this.sendMessage(Client, { mode: "Ping" });
