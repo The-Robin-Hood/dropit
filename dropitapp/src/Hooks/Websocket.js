@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Peer from "peerjs";
 
-const Websocket = ({ ws, peer, setpeerId, Clients, setClients, setFileDetails, setReceiving, setSending, setuserId, setSnackBarState, setSendFileDetails }) => {
+const Websocket = ({ ws, peer, setpeerId, setClients, setFileDetails, setReceiving, setSending, setuserId, setSnackBarState, setSendFileDetails }) => {
     useEffect(() => {
         ws.current = new WebSocket("wss://localhost:8080/webrtc");
         ws.current.onopen = () => {

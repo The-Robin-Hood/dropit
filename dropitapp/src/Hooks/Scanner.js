@@ -39,12 +39,12 @@ const QRScanner = ({ handleFileTransfer, setQrButtonClick,setErrorBarState,setEr
         multiple
         onClick={(event) => {
           event.target.value = null
-          setQrButtonClick(false);
         }}
         onChange={(e) => {
           if (e.target.files.length > 0) {
             console.log("Remote Peer : ",remotePeer);
             handleFileTransfer(remotePeer, e.target.files);
+            setQrButtonClick(false);
           }
 
         }}
