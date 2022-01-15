@@ -109,7 +109,7 @@ Project Link: [https://github.com/The-Robin-Hood/dropit](https://github.com/The-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-url]: https://github.com/The-Robin-Hood/dropit/blob/master/LICENSE
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/The-Robin-Hood/dropit.svg?style=for-the-badge
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/ansari-s
 [product-screenshot]: images/lightmode.png
