@@ -4,7 +4,7 @@ import Peer from "peerjs";
 
 const Websocket = ({ ws, peer, setpeerId, setClients, setFileDetails, setReceiving, setSending, setuserId, setSnackBarState, setSendFileDetails }) => {
     useEffect(() => {
-        ws.current = new WebSocket("wss://localhost:8080/webrtc");
+        ws.current = new WebSocket("ws://localhost:8080/webrtc");
         ws.current.onopen = () => {
             console.log("ws opened");
             const servers = {

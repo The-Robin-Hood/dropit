@@ -2,18 +2,6 @@ var process = require('process')
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
 const Client = require('./client.js');
-const https = require('https');
-const fs = require('fs');
-
-const options = {
-    key: fs.readFileSync('localhost-key.pem'),
-    cert: fs.readFileSync('localhost.pem')
-};
-
-const server = https.createServer(options, (req, res) => {
-    res.writeHead(200);
-    res.end("Hello world\n");
-}).listen(8080);
 
 process.on('SIGINT', () => {
     console.log("Exiting...");
@@ -23,7 +11,7 @@ process.on('SIGINT', () => {
 class DropIt {
 
     constructor(port) {
-        this.wss = new WebSocket.Server({ server });
+        this.wss = new WebSocket.Server({ port });
         this.wss.on('connection', (socket, request) => this.onConnection(new Client(socket, request)));
         this.wss.on("headers", (headers, response) => this.setHeaders(headers, response));
         this.chambers = {};
