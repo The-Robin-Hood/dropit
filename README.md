@@ -96,7 +96,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/AnsariStark) - ansari_official@yahoo.com
+Ansari - [@twitter_handle](https://twitter.com/AnsariStark) - ansari_official@yahoo.com
 
 Project Link: [https://github.com/The-Robin-Hood/dropit](https://github.com/The-Robin-Hood/dropit)
 
